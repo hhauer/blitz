@@ -5,6 +5,8 @@
 # Kendall Stewart - 22 March 2014
 #   - added flags to suppress warnings and linker errors
 #   - removed sections not relevant to x86 compilation
+# Harley Hauer - 16 April 2014
+#   - Modernized the makefile to clean up the compilation directory.
 #
 # To compile all the Blitz Tools, type 'make' with this 'makefile' file in a
 # directory containing the source files for all the Blitz.  The Unix "make"
@@ -29,63 +31,33 @@ CFLAGS=-g -m32 -w -Wl,--no-as-needed -lm -DBLITZ_HOST_IS_LITTLE_ENDIAN
 CPLUSPLUS=g++
 CPLUSPLUSFLAGS=-g -m32 -w -DBLITZ_HOST_IS_LITTLE_ENDIAN
 LINKFLAGS=
+BIN=./bin
 
+# Compile the C portion of the software.
 
-all: asm dumpObj lddd blitz diskUtil hexdump check endian kpl
+CTARGETS=asm dumpObj lddd blitz diskUtil hexdump check endian
+CLIST=$(addprefix $(BIN)/, $(CTARGETS))
 
-asm: asm.c
-	$(CC) $(CFLAGS) asm.c -o asm
+all: $(CLIST) $(BIN)/kpl
 
-lddd: lddd.c
-	$(CC) $(CFLAGS) lddd.c -o lddd
+$(BIN)/%: %.c
+	$(CC) $(CFLAGS) $< -o $@
 
-blitz: blitz.c
-	$(CC) $(CFLAGS) blitz.c -o blitz
+# Compile the C++ portion of the software.
+KPLSOURCES = main.cc lexer.cc ast.cc printAst.cc parser.cc mapping.cc \
+			 ir.cc gen.cc kplcheck.cc
 
-dumpObj: dumpObj.c
-	$(CC) $(CFLAGS) dumpObj.c -o dumpObj
+KPLOBJECTS = $(KPLSOURCES:.cc=.o)
 
-diskUtil: diskUtil.c
-	$(CC) $(CFLAGS) diskUtil.c -o diskUtil
+$(BIN)/kpl: $(KPLOBJECTS)
+	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) $(LINKFLAGS) $(KPLOBJECTS) -o $@
 
-hexdump: hexdump.c
-	$(CC) $(CFLAGS) hexdump.c -o hexdump
+.cc.o:
+	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c -o $@ $<
 
-check: check.c
-	$(CC) $(CFLAGS) check.c -o check
+.PHONY: clean
 
-endian: endian.c
-	$(CC) $(CFLAGS) endian.c -o endian
-
-kpl:	main.o lexer.o ast.o printAst.o parser.o mapping.o check.o ir.o gen.o
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) $(LINKFLAGS)\
-		main.o lexer.o ast.o printAst.o parser.o\
-		mapping.o check.o ir.o  gen.o -o kpl
-
-main.o: main.cc main.h ast.h ir.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c main.cc
-
-lexer.o: lexer.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c lexer.cc
-
-ast.o: ast.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c ast.cc
-
-printAst.o: printAst.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c printAst.cc
-
-parser.o: parser.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c parser.cc
-
-mapping.o: mapping.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c mapping.cc
-
-check.o: check.cc main.h ast.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c check.cc
-
-ir.o: ir.cc main.h ast.h ir.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c ir.cc
-
-gen.o: gen.cc main.h ast.h ir.h
-	$(CPLUSPLUS) $(CPLUSPLUSFLAGS) -c gen.cc
-
+clean:
+	rm -f $(CLIST)
+	rm -f $(BIN)/kpl
+	rm -f *.o
