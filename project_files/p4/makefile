@@ -12,31 +12,31 @@ Runtime.o: Runtime.s
 Switch.o: Switch.s
 	asm Switch.s
 
-System.s: System.h System.c
+System.s: System.kph System.kpl
 	kpl System -unsafe
 
 System.o: System.s
 	asm System.s
 
-List.s: System.h List.h List.c
+List.s: System.kph List.kph List.kpl
 	kpl List -unsafe
 
 List.o: List.s
 	asm List.s
 
-BitMap.s: System.h BitMap.h BitMap.c
+BitMap.s: System.kph BitMap.kph BitMap.kpl
 	kpl BitMap -unsafe
 
 BitMap.o: BitMap.s
 	asm BitMap.s
 
-Kernel.s: System.h List.h BitMap.h Kernel.h Kernel.c
+Kernel.s: System.kph List.kph BitMap.kph Kernel.kph Kernel.kpl
 	kpl Kernel -unsafe
 
 Kernel.o: Kernel.s
 	asm Kernel.s
 
-Main.s: System.h List.h BitMap.h Kernel.h Main.h Main.c
+Main.s: System.kph List.kph BitMap.kph Kernel.kph Main.kph Main.kpl
 	kpl Main -unsafe
 
 Main.o: Main.s
