@@ -44,3 +44,9 @@ Main.o: Main.s
 
 os: Runtime.o Switch.o System.o List.o BitMap.o Kernel.o Main.o
 	lddd Runtime.o Switch.o System.o List.o BitMap.o Kernel.o Main.o -o os
+
+.PHONY: clean
+
+clean:
+	rm Runtime.o Switch.o System.s System.o List.s List.o BitMap.s BitMap.o \
+		Kernel.s Kernel.o Main.s Main.o os
