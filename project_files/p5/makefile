@@ -13,7 +13,7 @@ all: os DISK
 UserRuntime.o: UserRuntime.s
 	asm UserRuntime.s
 
-UserSystem.s: UserSystem.h UserSystem.c
+UserSystem.s: UserSystem.kph UserSystem.kpl
 	kpl UserSystem -unsafe
 
 UserSystem.o: UserSystem.s
@@ -23,7 +23,7 @@ UserSystem.o: UserSystem.s
 # Stuff related to user-level program 'MyProgram'...
 #
 
-MyProgram.s: UserSystem.h MyProgram.h MyProgram.c
+MyProgram.s: UserSystem.kph MyProgram.kph MyProgram.kpl
 	kpl MyProgram -unsafe
 
 MyProgram.o: MyProgram.s
@@ -36,7 +36,7 @@ MyProgram: UserRuntime.o UserSystem.o MyProgram.o
 # Stuff related to user-level program 'TestProgram1'...
 #
 
-TestProgram1.s: UserSystem.h TestProgram1.h TestProgram1.c
+TestProgram1.s: UserSystem.kph TestProgram1.kph TestProgram1.kpl
 	kpl TestProgram1 -unsafe
 
 TestProgram1.o: TestProgram1.s
@@ -49,7 +49,7 @@ TestProgram1: UserRuntime.o UserSystem.o TestProgram1.o
 # Stuff related to user-level program 'TestProgram2'...
 #
 
-TestProgram2.s: UserSystem.h TestProgram2.h TestProgram2.c
+TestProgram2.s: UserSystem.kph TestProgram2.kph TestProgram2.kpl
 	kpl TestProgram2 -unsafe
 
 TestProgram2.o: TestProgram2.s
@@ -68,31 +68,31 @@ Runtime.o: Runtime.s
 Switch.o: Switch.s
 	asm Switch.s
 
-System.s: System.h System.c
+System.s: System.kph System.kpl
 	kpl System -unsafe
 
 System.o: System.s
 	asm System.s
 
-List.s: System.h List.h List.c
+List.s: System.kph List.kph List.kpl
 	kpl List -unsafe
 
 List.o: List.s
 	asm List.s
 
-BitMap.s: System.h BitMap.h BitMap.c
+BitMap.s: System.kph BitMap.kph BitMap.kpl
 	kpl BitMap -unsafe
 
 BitMap.o: BitMap.s
 	asm BitMap.s
 
-Kernel.s: System.h List.h BitMap.h Kernel.h Kernel.c
+Kernel.s: System.kph List.kph BitMap.kph Kernel.kph Kernel.kpl
 	kpl Kernel -unsafe
 
 Kernel.o: Kernel.s
 	asm Kernel.s
 
-Main.s: System.h List.h BitMap.h Kernel.h Main.h Main.c
+Main.s: System.kph List.kph BitMap.kph Kernel.kph Main.kph Main.kpl
 	kpl Main -unsafe
 
 Main.o: Main.s
