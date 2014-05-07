@@ -111,3 +111,10 @@ DISK: MyProgram TestProgram1 TestProgram2
 	diskUtil -a TestProgram1 TestProgram1
 	diskUtil -a TestProgram2 TestProgram2
 
+.PHONY: clean
+
+clean:
+	rm UserRuntime.o UserSystem.s UserSystem.o MyProgram.s MyProgram.o MyProgram \
+		TestProgram1.s TestProgram1.o TestProgram1 TestProgram2.s TestProgram2.o \
+		TestProgram2 Runtime.o Switch.o System.s System.o List.s List.o BitMap.s \
+		BitMap.o Kernel.s Kernel.o Main.s Main.o os
