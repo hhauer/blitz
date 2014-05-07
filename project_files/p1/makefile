@@ -21,13 +21,13 @@ Hello: Hello.o
 Runtime.o: Runtime.s
 	asm Runtime.s
 
-System.s: System.h System.c
+System.s: System.kph System.kpl
 	kpl System -unsafe
 
 System.o: System.s
 	asm System.s
 
-HelloWorld.s: HelloWorld.h HelloWorld.c System.h
+HelloWorld.s: HelloWorld.kph HelloWorld.kpl System.kph
 	kpl HelloWorld
 
 HelloWorld.o: HelloWorld.s
