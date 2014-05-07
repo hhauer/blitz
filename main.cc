@@ -17,9 +17,11 @@
 // Modifcations by:
 //   03/15/06 - Harry H. Porter III
 //   03/22/14 - Kendall Stewart
+//   05/05/14 - Harley Hauer
 //
 
 #include <signal.h>  
+#include <string.h>
 #include "main.h"
 
 
@@ -357,11 +359,10 @@ main (int argc, char ** argv) {
 
         // Figure out the name of the .h header file...
         len = strlen (newPackName->chars);
-        fileName = (char *) calloc (1, len + 4);
+        fileName = (char *) calloc (1, len + 5); // len(newPackName->chars) + ".kph\0"
         strcpy (fileName, newPackName->chars);
-        fileName [len] = '.';
-        fileName [len+1] = 'h';
-        fileName [len+2] = '\0';
+        strncat (fileName, ".kph", 4);
+
         fileName = initScanner (fileName);
         if (fileName != NULL) {
         
@@ -1241,23 +1242,19 @@ void processCommandLine (int argc, char ** argv) {
     exit (1);
   }
 
-  // Figure out the name of the .h header file.
+  // Figure out the name of the .kph header file.
   if (commandPackageName != NULL) {
     len = strlen (commandPackageName);
-    headerFileName = (char *) calloc (1, len + 4);
+    headerFileName = (char *) calloc (1, len + 5); // len(name) + ".kpl\0"
     strcpy (headerFileName, commandPackageName);
-    headerFileName [len] = '.';
-    headerFileName [len+1] = 'h';
-    headerFileName [len+2] = '\0';
+    strncat (headerFileName, ".kph", 4); // Automatically appends null character.
   }
 
-  // Figure out the name of the .c code file.
+  // Figure out the name of the .kpl code file.
   if (commandPackageName != NULL) {
-    codeFileName = (char *) calloc (1, len + 4);
+    codeFileName = (char *) calloc (1, len + 5); // len(name) + ".kph\h"
     strcpy (codeFileName, commandPackageName);
-    codeFileName [len] = '.';
-    codeFileName [len+1] = 'c';
-    codeFileName [len+2] = '\0';
+    strncat(codeFileName, ".kpl", 4); // Automatically appends null character.
   }
 
   // Figure out the name of the .s output file.
@@ -1306,6 +1303,7 @@ void printHelp () {
 "  Modifcations by:\n"
 "    03/15/06 - Harry H. Porter III\n"
 "    03/22/14 - Kendall Stewart\n"
+"    05/05/15 - Harley Hauer\n"
 "\n"
 "Command Line Options\n"
 "====================\n"

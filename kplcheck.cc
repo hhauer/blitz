@@ -56,8 +56,8 @@ void topoProcessAllPackages () {
     if (def == NULL) {
       tempMapping->enter (hdr->packageName, hdr);
     } else if (def != hdr) {
-      error (hdr, "This .h file uses the same package name as another .h file");
-      error2 (def, "Here is the other .h file");
+      error (hdr, "This .kph file uses the same package name as another .kph file");
+      error2 (def, "Here is the other .kph file");
     }
     next = hdr->next;
     hdr->next = NULL;
