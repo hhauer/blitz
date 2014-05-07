@@ -13,7 +13,7 @@ all: os DISK
 UserRuntime.o: UserRuntime.s
 	asm UserRuntime.s
 
-UserSystem.s: UserSystem.h UserSystem.c
+UserSystem.s: UserSystem.kph UserSystem.kpl
 	kpl UserSystem -unsafe
 
 UserSystem.o: UserSystem.s
@@ -23,7 +23,7 @@ UserSystem.o: UserSystem.s
 # Stuff related to user-level program 'MyProgram'...
 #
 
-MyProgram.s: UserSystem.h MyProgram.h MyProgram.c
+MyProgram.s: UserSystem.kph MyProgram.kph MyProgram.kpl
 	kpl MyProgram -unsafe
 
 MyProgram.o: MyProgram.s
@@ -36,7 +36,7 @@ MyProgram: UserRuntime.o UserSystem.o MyProgram.o
 # Stuff related to user-level program 'TestProgram1'...
 #
 
-TestProgram1.s: UserSystem.h TestProgram1.h TestProgram1.c
+TestProgram1.s: UserSystem.kph TestProgram1.kph TestProgram1.kpl
 	kpl TestProgram1 -unsafe
 
 TestProgram1.o: TestProgram1.s
@@ -49,7 +49,7 @@ TestProgram1: UserRuntime.o UserSystem.o TestProgram1.o
 # Stuff related to user-level program 'TestProgram2'...
 #
 
-TestProgram2.s: UserSystem.h TestProgram2.h TestProgram2.c
+TestProgram2.s: UserSystem.kph TestProgram2.kph TestProgram2.kpl
 	kpl TestProgram2 -unsafe
 
 TestProgram2.o: TestProgram2.s
@@ -62,7 +62,7 @@ TestProgram2: UserRuntime.o UserSystem.o TestProgram2.o
 # Stuff related to user-level program 'TestProgram3'...
 #
 
-TestProgram3.s: UserSystem.h TestProgram3.h TestProgram3.c
+TestProgram3.s: UserSystem.kph TestProgram3.kph TestProgram3.kpl
 	kpl TestProgram3 -unsafe
 
 TestProgram3.o: TestProgram3.s
@@ -75,7 +75,7 @@ TestProgram3: UserRuntime.o UserSystem.o TestProgram3.o
 # Stuff related to user-level program 'TestProgram4'...
 #
 
-TestProgram4.s: UserSystem.h TestProgram4.h TestProgram4.c
+TestProgram4.s: UserSystem.kph TestProgram4.kph TestProgram4.kpl
 	kpl TestProgram4 -unsafe
 
 TestProgram4.o: TestProgram4.s
@@ -88,7 +88,7 @@ TestProgram4: UserRuntime.o UserSystem.o TestProgram4.o
 # Stuff related to user-level program 'TestProgram5'...
 #
 
-TestProgram5.s: UserSystem.h TestProgram5.h TestProgram5.c
+TestProgram5.s: UserSystem.kph TestProgram5.kph TestProgram5.kpl
 	kpl TestProgram5 -unsafe
 
 TestProgram5.o: TestProgram5.s
@@ -102,7 +102,7 @@ TestProgram5: UserRuntime.o UserSystem.o TestProgram5.o
 # Stuff related to user-level program 'Program1'...
 #
 
-Program1.s: UserSystem.h Program1.h Program1.c
+Program1.s: UserSystem.kph Program1.kph Program1.kpl
 	kpl Program1
 
 Program1.o: Program1.s
@@ -116,7 +116,7 @@ Program1: UserRuntime.o UserSystem.o Program1.o
 # Stuff related to user-level program 'Program2'...
 #
 
-Program2.s: UserSystem.h Program2.h Program2.c
+Program2.s: UserSystem.kph Program2.kph Program2.kpl
 	kpl Program2 -unsafe
 
 Program2.o: Program2.s
@@ -130,7 +130,7 @@ Program2: UserRuntime.o UserSystem.o Program2.o
 # Stuff related to user-level program 'sh'...
 #
 
-sh.s: UserSystem.h sh.h sh.c
+sh.s: UserSystem.kph sh.kph sh.kpl
 	kpl sh -unsafe
 
 sh.o: sh.s
@@ -144,7 +144,7 @@ sh: UserRuntime.o UserSystem.o sh.o
 # Stuff related to user-level program 'cat'...
 #
 
-cat.s: UserSystem.h cat.h cat.c
+cat.s: UserSystem.kph cat.kph cat.kpl
 	kpl cat -unsafe
 
 cat.o: cat.s
@@ -158,7 +158,7 @@ cat: UserRuntime.o UserSystem.o cat.o
 # Stuff related to user-level program 'hello'...
 #
 
-hello.s: UserSystem.h hello.h hello.c
+hello.s: UserSystem.kph hello.kph hello.kpl
 	kpl hello -unsafe
 
 hello.o: hello.s
@@ -178,31 +178,31 @@ Runtime.o: Runtime.s
 Switch.o: Switch.s
 	asm Switch.s
 
-System.s: System.h System.c
+System.s: System.kph System.kpl
 	kpl System -unsafe
 
 System.o: System.s
 	asm System.s
 
-List.s: System.h List.h List.c
+List.s: System.kph List.kph List.kpl
 	kpl List -unsafe
 
 List.o: List.s
 	asm List.s
 
-BitMap.s: System.h BitMap.h BitMap.c
+BitMap.s: System.kph BitMap.kph BitMap.kpl
 	kpl BitMap -unsafe
 
 BitMap.o: BitMap.s
 	asm BitMap.s
 
-Kernel.s: System.h List.h BitMap.h Kernel.h Kernel.c
+Kernel.s: System.kph List.kph BitMap.kph Kernel.kph Kernel.kpl
 	kpl Kernel -unsafe
 
 Kernel.o: Kernel.s
 	asm Kernel.s
 
-Main.s: System.h List.h BitMap.h Kernel.h Main.h Main.c
+Main.s: System.kph List.kph BitMap.kph Kernel.kph Main.kph Main.kpl
 	kpl Main -unsafe
 
 Main.o: Main.s
