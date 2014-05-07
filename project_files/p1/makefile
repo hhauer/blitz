@@ -35,3 +35,8 @@ HelloWorld.o: HelloWorld.s
 
 HelloWorld: Runtime.o System.o HelloWorld.o
 	lddd Runtime.o System.o HelloWorld.o -o HelloWorld
+
+.PHONY: clean
+
+clean:
+	rm Echo.o Echo Hello.o Hello Runtime.o System.s HelloWorld.s HelloWorld.o HelloWorld
