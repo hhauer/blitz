@@ -42,7 +42,11 @@ Main.s: Main.kph Main.kpl Thread.kph List.kph System.kph Synch.kph
 Main.o: Main.s
 	asm Main.s
 
-
-
 os: System.o List.o Thread.o Switch.o Synch.o Main.o Runtime.o
 	lddd System.o List.o Thread.o Switch.o Synch.o Main.o Runtime.o -o os
+
+.PHONY: clean
+
+clean:
+	rm Runtime.o Switch.o System.s System.o List.s List.o Thread.s Thread.o \
+		Synch.s Synch.o Main.s Main.o os
